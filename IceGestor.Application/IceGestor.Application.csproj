@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IceGestor.Core\IceGestor.Core.csproj" />
+    <ProjectReference Include="..\IceGestor.CrossCutting\IceGestor.CrossCutting.csproj" />
+    <ProjectReference Include="..\IceGestor.Infra\IceGestor.Infra.csproj" />
+  </ItemGroup>
+
 </Project>
