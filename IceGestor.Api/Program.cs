@@ -1,12 +1,21 @@
-var builder = WebApplication.CreateBuilder(args);
+using IceGestor.Api.Extensions;
+using IceGestor.Infra.Persistence;
+using Microsoft.EntityFrameworkCore;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-var app = builder.Build();
+var connectionString = builder.Configuration.GetConnectionString("IceGestorCs");
 
-// Configure the HTTP request pipeline.
+builder.Services.AddDbContext<IceGestorDbContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
+
+builder.Services.AddInfraRepositories();
+
+var app = builder.Build();
 
 app.UseHttpsRedirection();
 
