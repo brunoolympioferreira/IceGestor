@@ -1,4 +1,5 @@
 using IceGestor.Api.Extensions;
+using IceGestor.Api.Filters;
 using IceGestor.Infra.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<IceGestorDbContext>(options =>
 });
 
 builder.Services.AddInfraRepositories();
+
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionsFilter)));
 
 builder.Services.AddSwaggerGen(c =>
 {
