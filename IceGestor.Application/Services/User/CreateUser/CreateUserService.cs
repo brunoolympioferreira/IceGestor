@@ -1,4 +1,5 @@
 ﻿using IceGestor.Application.Authentication;
+using IceGestor.Core.RepositoriesInterfaces;
 using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.CrossCutting.ViewModels.User;
 using IceGestor.Infra.Persistence;
@@ -6,23 +7,20 @@ using IceGestor.Infra.Persistence;
 namespace IceGestor.Application.Services.User.CreateUser;
 public class CreateUserService : ICreateUserService
 {
-    private readonly IceGestorDbContext _dbContext;
+    private readonly IUserRepository _repository;
     private readonly IAuthService _authService;
-    public CreateUserService(IceGestorDbContext dbContext, IAuthService authService)
+    public CreateUserService(IUserRepository repository, IAuthService authService)
     {
-        _dbContext = dbContext;
+        _repository = repository;
         _authService = authService;
     }
     public async Task<UserCreatedViewModel> Execute(CreateUserInputModel request)
     {
         var passwordHash = _authService.ComputeSha256Hash(request.Password);
 
-        DateTime createdAt = DateTime.Now;
+        Core.Entities.User user = new(request.Username, passwordHash, request.Email, DateTime.Now, default);
 
-        Core.Entities.User user = new(request.Username, passwordHash, request.Email, createdAt, default);
-
-        await _dbContext.Users.AddAsync(user);
-        await _dbContext.SaveChangesAsync();
+        await _repository.AddAsync(user);
 
         var token = _authService.GenerateJwtToken(user.Email, user.Username);
 

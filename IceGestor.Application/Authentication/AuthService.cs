@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace IceGestor.Application.Authentication;
-internal class AuthService : IAuthService
+public class AuthService : IAuthService
 {
     private readonly IConfiguration _configuration;
 
