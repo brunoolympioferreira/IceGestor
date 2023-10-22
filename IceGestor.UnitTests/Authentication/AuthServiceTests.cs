@@ -16,11 +16,11 @@ public class AuthServiceTests
         configurationMock.Setup(x => x["Jwt:Key"]).Returns("Minha Super Senha Secreta Para Proteger Meus Tokens!");
 
         var authService = new AuthService(configurationMock.Object);
-        var email = "test@example.com";
-        var userName = "testuser";
+        string email = "test@example.com";
+        string userName = "testuser";
 
         // Act
-        var token = authService.GenerateJwtToken(email, userName);
+        string token = authService.GenerateJwtToken(email, userName);
 
         // Assert
         Assert.NotNull(token);
@@ -40,11 +40,11 @@ public class AuthServiceTests
         // Arrange
         var configurationMock = new Mock<IConfiguration>();
         var authService = new AuthService(configurationMock.Object);
-        var password = "testpassword";
-        var expectedHash = "9f735e0df9a1ddc702bf0a1a7b83033f9f7153a00c29de82cedadc9957289b05";
+        string password = "testpassword";
+        string expectedHash = "9f735e0df9a1ddc702bf0a1a7b83033f9f7153a00c29de82cedadc9957289b05";
 
         // Act
-        var computedHash = authService.ComputeSha256Hash(password);
+        string computedHash = authService.ComputeSha256Hash(password);
 
         // Assert
         Assert.Equal(expectedHash, computedHash);

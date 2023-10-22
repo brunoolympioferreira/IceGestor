@@ -2,7 +2,6 @@
 using IceGestor.Core.RepositoriesInterfaces;
 using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.CrossCutting.ViewModels.User;
-using IceGestor.Infra.Persistence;
 
 namespace IceGestor.Application.Services.User.CreateUser;
 public class CreateUserService : ICreateUserService
@@ -16,13 +15,15 @@ public class CreateUserService : ICreateUserService
     }
     public async Task<UserCreatedViewModel> Execute(CreateUserInputModel request)
     {
-        var passwordHash = _authService.ComputeSha256Hash(request.Password);
+        // implementar validacao da request
+
+        string passwordHash = _authService.ComputeSha256Hash(request.Password);
 
         Core.Entities.User user = new(request.Username, passwordHash, request.Email, DateTime.Now, default);
 
         await _repository.AddAsync(user);
 
-        var token = _authService.GenerateJwtToken(user.Email, user.Username);
+        string token = _authService.GenerateJwtToken(user.Email, user.Username);
 
         return new UserCreatedViewModel
         {
