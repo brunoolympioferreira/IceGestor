@@ -15,8 +15,6 @@ public class CreateUserService : ICreateUserService
     }
     public async Task<UserCreatedViewModel> Execute(CreateUserInputModel request)
     {
-        // implementar validacao da request
-
         string passwordHash = _authService.ComputeSha256Hash(request.Password);
 
         Core.Entities.User user = new(request.Username, passwordHash, request.Email, DateTime.Now, default);

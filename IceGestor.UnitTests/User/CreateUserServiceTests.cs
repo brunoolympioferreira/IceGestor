@@ -27,8 +27,6 @@ public class CreateUserServiceTests
 
         string expectedToken = "test-token";
 
-        var hash = authServiceMock.Object.ComputeSha256Hash(request.Password);
-
         // Setup mocks
         authServiceMock.Setup(x => x.ComputeSha256Hash(request.Password))
                        .Returns("hashed-password");
@@ -49,4 +47,10 @@ public class CreateUserServiceTests
         Assert.Equal(request.Email, result.Email);
         Assert.Equal(expectedToken, result.Token);
     }
+
+    //Erro quando senha é invalida
+
+    //Erro quando email é invalido
+
+    //erro quando username é nulo
 }
