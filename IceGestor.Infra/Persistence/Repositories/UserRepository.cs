@@ -1,5 +1,6 @@
 ﻿using IceGestor.Core.Entities;
 using IceGestor.Core.RepositoriesInterfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace IceGestor.Infra.Persistence.Repositories;
 public class UserRepository : IUserRepository
@@ -13,5 +14,15 @@ public class UserRepository : IUserRepository
     {
         await _dbContext.Users.AddAsync(user);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> ExistsUserWithEmail(string email)
+    {
+        return await _dbContext.Users.AnyAsync(u => u.Email.Equals(email));
+    }
+
+    public async Task<bool> ExistsUserWithUsername(string username)
+    {
+        return await _dbContext.Users.AnyAsync(u => u.Username.Equals(username));
     }
 }

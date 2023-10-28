@@ -19,7 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IceGestor.Infra", "IceGesto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IceGestor.Application", "IceGestor.Application\IceGestor.Application.csproj", "{BFC00882-74A8-4C7C-A135-ED2D29EE6A35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IceGestor.UnitTests", "IceGestor.UnitTests\IceGestor.UnitTests.csproj", "{62D585FF-CF3D-4F41-8E22-2A78BC6EAD6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IceGestor.UnitTests", "IceGestor.UnitTests\IceGestor.UnitTests.csproj", "{62D585FF-CF3D-4F41-8E22-2A78BC6EAD6B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2222053F-4B2F-4B4B-86A3-57E1CCB3D249} = {2222053F-4B2F-4B4B-86A3-57E1CCB3D249}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

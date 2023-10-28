@@ -1,3 +1,4 @@
+using FluentValidation.TestHelper;
 using IceGestor.Application.Authentication;
 using IceGestor.Application.Services.User.CreateUser;
 using IceGestor.Core.RepositoriesInterfaces;
@@ -21,8 +22,8 @@ public class CreateUserServiceTests
         CreateUserInputModel request = new()
         {
             Username = "bruno_ferreira",
-            Email = "bruno@email.com",
-            Password = "senha@123Bruno"
+            Password = "senha@123Bruno",
+            Email = "bruno@email.com"
         };
 
         string expectedToken = "test-token";
@@ -47,10 +48,4 @@ public class CreateUserServiceTests
         Assert.Equal(request.Email, result.Email);
         Assert.Equal(expectedToken, result.Token);
     }
-
-    //Erro quando senha é invalida
-
-    //Erro quando email é invalido
-
-    //erro quando username é nulo
 }

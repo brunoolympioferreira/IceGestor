@@ -3,14 +3,14 @@ using IceGestor.CrossCutting.InputModels.User;
 using System.Text.RegularExpressions;
 
 namespace IceGestor.Application.Services.User.CreateUser;
-public partial class CreateUserValidator : AbstractValidator<CreateUserInputModel>
+public class CreateUserValidator : AbstractValidator<CreateUserInputModel>
 {
     public CreateUserValidator()
     {
         RuleFor(u => u.Username)
             .NotEmpty()
             .NotNull()
-            .WithMessage("Username é obrigatório!");
+            .WithMessage("Username não pode estar vazio");
 
         RuleFor(u => u.Password)
             .Must(ValidPassword)
@@ -21,13 +21,10 @@ public partial class CreateUserValidator : AbstractValidator<CreateUserInputMode
             .WithMessage("E-mail não válido!");
     }
 
-    private bool ValidPassword(string password)
+    private static bool ValidPassword(string password)
     {
-        Regex regex = PasswordRegex();
+        var regex = new Regex(@"^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$");
 
         return regex.IsMatch(password);
     }
-
-    [GeneratedRegex("^.*(?=.{8,})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$")]
-    private static partial Regex PasswordRegex();
 }
