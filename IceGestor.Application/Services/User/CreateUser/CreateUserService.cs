@@ -3,15 +3,16 @@ using IceGestor.Core.RepositoriesInterfaces;
 using IceGestor.CrossCutting.Exceptions;
 using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.CrossCutting.ViewModels.User;
+using IceGestor.Infra.Persistence;
 
 namespace IceGestor.Application.Services.User.CreateUser;
 public class CreateUserService : ICreateUserService
 {
-    private readonly IUserRepository _repository;
+    private readonly IUnityOfWork _unityOfWork;
     private readonly IAuthService _authService;
-    public CreateUserService(IUserRepository repository, IAuthService authService)
+    public CreateUserService(IUnityOfWork unityOfWork, IAuthService authService)
     {
-        _repository = repository;
+        _unityOfWork = unityOfWork;
         _authService = authService;
     }
     public async Task<UserCreatedViewModel> Execute(CreateUserInputModel request)
@@ -22,7 +23,13 @@ public class CreateUserService : ICreateUserService
 
         Core.Entities.User user = new(request.Username, passwordHash, request.Email, DateTime.Now, default);
 
-        await _repository.AddAsync(user);
+        await _unityOfWork.BeginTransactionAsync();
+
+        await _unityOfWork.Users.AddAsync(user);
+
+        await _unityOfWork.CompleteAsync();
+
+        await _unityOfWork.CommitAsync();
 
         string token = _authService.GenerateJwtToken(user.Email, user.Username);
 
@@ -39,8 +46,8 @@ public class CreateUserService : ICreateUserService
         var validator = new CreateUserValidator();
         var result = validator.Validate(request);
 
-        var existsUserWithEmail = await _repository.ExistsUserWithEmail(request.Email);
-        var existsUserWithUsername = await _repository.ExistsUserWithUsername(request.Username);
+        var existsUserWithEmail = await _unityOfWork.Users.ExistsUserWithEmail(request.Email);
+        var existsUserWithUsername = await _unityOfWork.Users.ExistsUserWithUsername(request.Username);
         if (existsUserWithEmail)
             result.Errors.Add(new FluentValidation.Results.ValidationFailure("email", "E-mail já cadastrado"));
         else if (existsUserWithUsername)

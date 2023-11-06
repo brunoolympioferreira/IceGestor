@@ -1,9 +1,11 @@
 using FluentValidation.TestHelper;
 using IceGestor.Application.Authentication;
+using FluentAssertions;
 using IceGestor.Application.Services.User.CreateUser;
 using IceGestor.Core.RepositoriesInterfaces;
 using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.CrossCutting.ViewModels.User;
+using IceGestor.Infra.Persistence;
 using Moq;
 
 namespace IceGestor.UnitTests.User;
@@ -11,41 +13,35 @@ namespace IceGestor.UnitTests.User;
 public class CreateUserServiceTests
 {
     [Fact]
-    public async Task InputDataIsOk_Executed_ReturnViewModel()
+    public async Task Execute_ValidInput_ReturnsUserCreatedViewModel()
     {
         // Arrange
-        var userRepositoryMock = new Mock<IUserRepository>();
+        var unityOfWorkMock = new Mock<IUnityOfWork>();
         var authServiceMock = new Mock<IAuthService>();
 
-        var service = new CreateUserService(userRepositoryMock.Object, authServiceMock.Object);
-
-        CreateUserInputModel request = new()
+        var createUserInputModel = new CreateUserInputModel
         {
-            Username = "bruno_ferreira",
-            Password = "senha@123Bruno",
-            Email = "bruno@email.com"
+            Username = "testuser",
+            Email = "test@example.com",
+            Password = "password"
         };
 
-        string expectedToken = "test-token";
-
-        // Setup mocks
-        authServiceMock.Setup(x => x.ComputeSha256Hash(request.Password))
-                       .Returns("hashed-password");
-
-        authServiceMock.Setup(x => x.GenerateJwtToken(request.Email, request.Username))
-                       .Returns(expectedToken);
+        var createUserService = new CreateUserService(unityOfWorkMock.Object, authServiceMock.Object);
 
         // Act
-        UserCreatedViewModel result = await service.Execute(request);
+        var result = await createUserService.Execute(createUserInputModel);
 
         // Assert
-        userRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Core.Entities.User>()), Times.Once);
-        authServiceMock.Verify(x => x.ComputeSha256Hash(request.Password), Times.Once);
-        authServiceMock.Verify(x => x.GenerateJwtToken(request.Email, request.Username), Times.Once);
+        result.Should().NotBeNull();
+        result.Should().BeOfType<UserCreatedViewModel>();
+        result.Username.Should().Be(createUserInputModel.Username);
+        result.Email.Should().Be(createUserInputModel.Email);
+        result.Token.Should().NotBeNullOrWhiteSpace();
 
-        Assert.NotNull(result);
-        Assert.Equal(request.Username, result.Username);
-        Assert.Equal(request.Email, result.Email);
-        Assert.Equal(expectedToken, result.Token);
+        unityOfWorkMock.Verify(uow => uow.BeginTransactionAsync(), Times.Once);
+        unityOfWorkMock.Verify(uow => uow.Users.AddAsync(It.IsAny<Core.Entities.User>()), Times.Once);
+        unityOfWorkMock.Verify(uow => uow.CompleteAsync(), Times.Once);
+        unityOfWorkMock.Verify(uow => uow.CommitAsync(), Times.Once);
+        authServiceMock.Verify(authService => authService.GenerateJwtToken(createUserInputModel.Email, createUserInputModel.Username), Times.Once);
     }
 }
