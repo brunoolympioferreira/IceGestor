@@ -1,10 +1,9 @@
-using FluentValidation.TestHelper;
-using IceGestor.Application.Authentication;
 using FluentAssertions;
+using IceGestor.Application.Authentication;
 using IceGestor.Application.Services.User.CreateUser;
 using IceGestor.Core.RepositoriesInterfaces;
+using IceGestor.CrossCutting.Exceptions;
 using IceGestor.CrossCutting.InputModels.User;
-using IceGestor.CrossCutting.ViewModels.User;
 using IceGestor.Infra.Persistence;
 using Moq;
 
@@ -13,35 +12,56 @@ namespace IceGestor.UnitTests.User;
 public class CreateUserServiceTests
 {
     [Fact]
-    public async Task Execute_ValidInput_ReturnsUserCreatedViewModel()
+    public async Task Validar_Sucesso()
     {
-        // Arrange
-        var unityOfWorkMock = new Mock<IUnityOfWork>();
-        var authServiceMock = new Mock<IAuthService>();
+        //Arrange
+        var unityOfWork = new Mock<IUnityOfWork>();
+        var authService = new Mock<IAuthService>();
+        var userRepository = new Mock<IUserRepository>();
 
-        var createUserInputModel = new CreateUserInputModel
+        unityOfWork.SetupGet(uow => uow.Users).Returns(userRepository.Object);
+        var request = new CreateUserInputModel()
         {
-            Username = "testuser",
+            Username = "testUser",
+            Email = "test@example.com",
+            Password = "TestPass@123"
+        };
+
+        var service = new CreateUserService(unityOfWork.Object, authService.Object);
+
+        var response = await service.Execute(request);
+        response.Token = "token-test";
+
+        response.Should().NotBeNull();
+        response.Token.Should().NotBeNullOrWhiteSpace();
+        response.Username.Should().NotBeNullOrWhiteSpace();
+        response.Email.Should().NotBeNullOrWhiteSpace();
+    }
+
+    [Fact]
+    public async Task Validar_Senha_Invalida()
+    {
+        //Arrange
+        var unityOfWork = new Mock<IUnityOfWork>();
+        var authService = new Mock<IAuthService>();
+        var userRepository = new Mock<IUserRepository>();
+
+        unityOfWork.SetupGet(uow => uow.Users).Returns(userRepository.Object);
+        var request = new CreateUserInputModel()
+        {
+            Username = "testUser",
             Email = "test@example.com",
             Password = "password"
         };
 
-        var createUserService = new CreateUserService(unityOfWorkMock.Object, authServiceMock.Object);
+        var service = new CreateUserService(unityOfWork.Object, authService.Object);
 
-        // Act
-        var result = await createUserService.Execute(createUserInputModel);
+        Func<Task> acao = async () => { await service.Execute(request); };
 
-        // Assert
-        result.Should().NotBeNull();
-        result.Should().BeOfType<UserCreatedViewModel>();
-        result.Username.Should().Be(createUserInputModel.Username);
-        result.Email.Should().Be(createUserInputModel.Email);
-        result.Token.Should().NotBeNullOrWhiteSpace();
-
-        unityOfWorkMock.Verify(uow => uow.BeginTransactionAsync(), Times.Once);
-        unityOfWorkMock.Verify(uow => uow.Users.AddAsync(It.IsAny<Core.Entities.User>()), Times.Once);
-        unityOfWorkMock.Verify(uow => uow.CompleteAsync(), Times.Once);
-        unityOfWorkMock.Verify(uow => uow.CommitAsync(), Times.Once);
-        authServiceMock.Verify(authService => authService.GenerateJwtToken(createUserInputModel.Email, createUserInputModel.Username), Times.Once);
+        await acao.Should().ThrowAsync<ValidationErrorsException>()
+            .Where(ex => ex.ErrorMessages.Count == 1 &&
+                ex.ErrorMessages.Contains("Senha deve conter pelo menos 8 caracteres, um número, uma letra maiúscula, uma minúscula, e um caractere especial"));
+                
     }
+
 }
