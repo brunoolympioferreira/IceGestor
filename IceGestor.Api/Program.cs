@@ -1,5 +1,6 @@
 using IceGestor.Api.Extensions;
 using IceGestor.Api.Filters;
+using IceGestor.CrossCutting.Nlog;
 using IceGestor.Infra.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,8 @@ builder.Services.AddDbContext<IceGestorDbContext>(options =>
 });
 
 builder.Services.AddInfraRepositories();
+
+builder.Services.AddScoped<IloggerManager, LoggerManager>();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionsFilter)));
 
