@@ -21,7 +21,7 @@ public class CreateUserService : ICreateUserService
 
         string passwordHash = _authService.ComputeSha256Hash(request.Password);
 
-        Core.Entities.User user = new(request.Username, passwordHash, request.Email, DateTime.Now, default);
+        Core.Entities.User user = new (request.Username, passwordHash, request.Email);
 
         await _unityOfWork.BeginTransactionAsync();
 

@@ -1,13 +1,13 @@
 ﻿namespace IceGestor.Core.Entities;
 public class User : BaseEntity
 {
-    public User(string username, string password, string email, DateTime createdAt, DateTime updatedAt)
+    public User(string username, string password, string email)
     {
         Username = username;
         Password = password;
         Email = email;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+
+        CreatedAt = DateTime.Now;
     }
 
     public string Username { get; private set; }
