@@ -4,7 +4,7 @@ using NLog;
 namespace IceGestor.CrossCutting.Nlog;
 public class LoggerManager : IloggerManager
 {
-    private static ILogger logger = LogManager.GetCurrentClassLogger();
+    private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
     public void LogError(string message, IceGestorException ex)
     {
         logger.Info(message, ex);
