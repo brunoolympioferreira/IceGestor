@@ -1,11 +1,9 @@
 ﻿using IceGestor.Application.Authentication;
-using IceGestor.Core.RepositoriesInterfaces;
 using IceGestor.CrossCutting.Exceptions;
 using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.CrossCutting.Nlog;
 using IceGestor.CrossCutting.ViewModels.User;
 using IceGestor.Infra.Persistence;
-using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace IceGestor.Application.Services.User.CreateUser;
 public class CreateUserService : ICreateUserService
@@ -50,9 +48,9 @@ public class CreateUserService : ICreateUserService
         catch (IceGestorException ex)
         {
             _logger.LogError(ex.Message, new IceGestorException(ex.Message));
-            throw;            
+            throw;
         }
-        
+
     }
 
     private async Task Validate(CreateUserInputModel request)

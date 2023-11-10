@@ -4,6 +4,7 @@ using IceGestor.Application.Services.User.CreateUser;
 using IceGestor.Core.RepositoriesInterfaces;
 using IceGestor.CrossCutting.Exceptions;
 using IceGestor.CrossCutting.InputModels.User;
+using IceGestor.CrossCutting.Nlog;
 using IceGestor.Infra.Persistence;
 using Moq;
 
@@ -18,6 +19,7 @@ public class CreateUserServiceTests
         var unityOfWork = new Mock<IUnityOfWork>();
         var authService = new Mock<IAuthService>();
         var userRepository = new Mock<IUserRepository>();
+        var logger = new Mock<IloggerManager>();
 
         unityOfWork.SetupGet(uow => uow.Users).Returns(userRepository.Object);
         var request = new CreateUserInputModel()
@@ -27,7 +29,7 @@ public class CreateUserServiceTests
             Password = "TestPass@123"
         };
 
-        var service = new CreateUserService(unityOfWork.Object, authService.Object);
+        var service = new CreateUserService(unityOfWork.Object, authService.Object, logger.Object);
 
         var response = await service.Execute(request);
         response.Token = "token-test";
@@ -45,6 +47,7 @@ public class CreateUserServiceTests
         var unityOfWork = new Mock<IUnityOfWork>();
         var authService = new Mock<IAuthService>();
         var userRepository = new Mock<IUserRepository>();
+        var logger = new Mock<IloggerManager>();
 
         unityOfWork.SetupGet(uow => uow.Users).Returns(userRepository.Object);
         var request = new CreateUserInputModel()
@@ -54,7 +57,7 @@ public class CreateUserServiceTests
             Password = "password"
         };
 
-        var service = new CreateUserService(unityOfWork.Object, authService.Object);
+        var service = new CreateUserService(unityOfWork.Object, authService.Object, logger.Object);
 
         Func<Task> acao = async () => { await service.Execute(request); };
 
