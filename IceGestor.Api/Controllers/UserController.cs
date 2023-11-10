@@ -27,6 +27,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [Route("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserInputModel request)
     {
         var loginUserViewModel = await _loginUserService.Login(request);
