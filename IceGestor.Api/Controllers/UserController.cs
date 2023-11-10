@@ -1,6 +1,8 @@
 ﻿using IceGestor.Application.Services.User.CreateUser;
+using IceGestor.Application.Services.User.Login;
 using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.CrossCutting.ViewModels.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IceGestor.Api.Controllers;
@@ -9,9 +11,11 @@ namespace IceGestor.Api.Controllers;
 public class UserController : ControllerBase
 {
     private readonly ICreateUserService _createUserService;
-    public UserController(ICreateUserService createUserService)
+    private readonly IUserLoginService _loginUserService;
+    public UserController(ICreateUserService createUserService, IUserLoginService loginUserService)
     {
         _createUserService = createUserService;
+        _loginUserService = loginUserService;
     }
 
     [HttpPost]
@@ -20,5 +24,15 @@ public class UserController : ControllerBase
         UserCreatedViewModel result = await _createUserService.Execute(inputModel);
 
         return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login([FromBody] LoginUserInputModel request)
+    {
+        var loginUserViewModel = await _loginUserService.Login(request);
+
+        if (loginUserViewModel == null) return BadRequest();
+
+        return Ok(loginUserViewModel);
     }
 }

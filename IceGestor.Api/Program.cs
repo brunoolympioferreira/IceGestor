@@ -20,12 +20,7 @@ builder.Services.AddDbContext<IceGestorDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
-//Configure NLog
-LogManager.Setup().LoadConfigurationFromFile("NLog.config");
-
-builder.Services.AddInfraRepositories();
-
-builder.Services.AddScoped<IloggerManager, LoggerManager>();
+builder.Services.AddDependencyInjections();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionsFilter)));
 
