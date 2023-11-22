@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavegacaoModule } from './navegacao/navegacao.module';
 import { ToastrModule } from 'ngx-toastr';
+import { NarikCustomValidatorsModule } from '@narik/custom-validators';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     HttpClientModule,
     NavegacaoModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NarikCustomValidatorsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
