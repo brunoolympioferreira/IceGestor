@@ -17,6 +17,21 @@ a.navbar-brand {
   overflow: hidden;
 }
 
+.login-container {
+  padding-top: 25px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 100px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 180px;
+  overflow: hidden;
+  border: 1px solid #c6c6c7;
+  padding: 20px;
+  background-color: white;
+  font-size: 14px
+}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */

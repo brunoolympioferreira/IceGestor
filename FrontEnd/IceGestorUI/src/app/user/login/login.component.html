@@ -1,1 +1,41 @@
-<p>login works!</p>
+<div>
+    <h2 class="pb-2">Login</h2>
+    <hr>
+    <form>
+
+        <div class="alert alert-danger" *ngIf="errors.length > 0">
+            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+            <ul>
+                <li *ngFor="let error of errors">{{ error }}</li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 pb-2 control-label">E-mail</label>
+            <div class="col-md-10 pb-2">
+                <input class="form-control" id="email" type="text" placeholder="E-mail (requerido)"
+                    formControlName="email" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 pb-2 control-label">Senha</label>
+            <div class="col-md-10 pb-2">
+                <input class="form-control" id="senha" type="text" placeholder="Senha (requerido)"
+                    formControlName="senha" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="mt-2">
+                <button class="btn btn-primary btn-block col-12 pt-2 pb-2" id="Login" [disabled]="!loginForm.valid"
+                    type="submit">Login</button>
+            </div>
+        </div>
+        <div class="mt-4 text-center">
+            Não tem uma conta? <a href="#">Crie sua conta</a>
+        </div>
+    </form>
+
+
+</div>
