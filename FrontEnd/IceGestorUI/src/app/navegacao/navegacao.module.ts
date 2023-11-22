@@ -1,4 +1,4 @@
-import { User } from './../user/login/models/user';
+import { User } from '../user/models/user';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from "./home/home.component";
 import { CommonModule } from "@angular/common";

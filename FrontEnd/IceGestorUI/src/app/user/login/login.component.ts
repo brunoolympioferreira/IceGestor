@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControlName, FormGroup } from '@angular/forms';
 import { FormBaseComponent } from 'src/app/base-components/form-base-component';
-import { User } from './models/user';
+import { User } from '../models/user';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 
