@@ -5,6 +5,8 @@ import { LoginComponent } from "./login/login.component";
 import { CommonModule } from "@angular/common";
 import { CreateUserComponent } from './create-user/create-user.component';
 import { UserRoutingModule } from "./user.route";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -15,7 +17,10 @@ import { UserRoutingModule } from "./user.route";
     imports: [
         CommonModule,
         RouterModule,
-        UserRoutingModule
+        UserRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule
     ],
     exports: [
         LoginComponent,

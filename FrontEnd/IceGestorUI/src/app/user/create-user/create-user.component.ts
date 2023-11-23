@@ -59,7 +59,7 @@ export class CreateUserComponent extends FormBaseComponent implements OnInit, Af
 
   }
 
-  processarSucesso() {
+  processarSucesso(response: any) {
 
   }
 
