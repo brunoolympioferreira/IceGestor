@@ -64,7 +64,7 @@ export class CreateUserComponent extends FormBaseComponent implements OnInit, Af
           next: sucesso => { this.processarSucesso(sucesso) },
           error: falha => { this.processarFalha(falha) }
         })
-      console.log(this.createForm.value);
+      //console.log(this.createForm.value);
     }
   }
 
