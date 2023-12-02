@@ -1,15 +1,8 @@
 <div class="mt-4 container main-container col-3 border border-2">
     <h1>Cadastro</h1>
-    <form novalidate (ngsubmit)="criarConta()" [formGroup]="createForm">
+    <form novalidate (ngSubmit)="criarConta()" [formGroup]="createForm">
         <h4>Crie sua conta</h4>
         <hr>
-
-        <div class="alert alert-danger" *ngIf="errors.length > 0">
-            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
-            <ul>
-                <li *ngFor="let error of errors">{{ error }}</li>
-            </ul>
-        </div>
 
         <div class="form-group mb-2">
             <label class="col-md-4 control-label">Nome de Usuário</label>
@@ -36,7 +29,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label">Senha</label>
             <div class="col-md-10">
-                <input class="form-control" id="password" type="text" placeholder="Senha entre 6 e 15 caracteres"
+                <input class="form-control" id="password" type="password" placeholder="Senha entre 6 e 15 caracteres"
                     formControlName="password" [ngClass]="{'is-invalid': displayMessage.password }" />
                 <span class="text-danger" *ngIf="displayMessage.password">
                     <p [innerHTML]="displayMessage.password"></p>
@@ -46,7 +39,7 @@
 
         <div class="form-group">
             <div class="mt-4">
-                <button class="btn btn-primary btn-block col-12 pt-2 pb-2" id="Login" [disabled]="!createForm.valid"
+                <button class="btn btn-primary col-12 pt-2 pb-2" id="create" [disabled]="!createForm.valid"
                     type="submit">Registrar</button>
             </div>
         </div>

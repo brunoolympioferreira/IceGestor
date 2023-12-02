@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CustomValidators } from '@narik/custom-validators';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-create-user',
@@ -19,7 +20,7 @@ export class CreateUserComponent extends FormBaseComponent implements OnInit, Af
 
   constructor(
     private fb: FormBuilder,
-    // private userService: UserService,
+    private userService: UserService,
     private router: Router,
     private toastr: ToastrService) {
     super()
@@ -45,9 +46,9 @@ export class CreateUserComponent extends FormBaseComponent implements OnInit, Af
     let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15])])
 
     this.createForm = this.fb.group({
-      username: ['', [Validators.required]],
-      email: ['', [Validators.required], [Validators.email]],
-      password: senha
+      email: ['', [Validators.required, Validators.email]],
+      password: senha,
+      username: ['', [Validators.required]]
     });
   }
 
@@ -56,14 +57,34 @@ export class CreateUserComponent extends FormBaseComponent implements OnInit, Af
   }
 
   criarConta() {
-
+    if (this.createForm.dirty && this.createForm.valid) {
+      this.user = Object.assign({}, this.user, this.createForm.value);
+      this.userService.createUser(this.user)
+        .subscribe({
+          next: sucesso => { this.processarSucesso(sucesso) },
+          error: falha => { this.processarFalha(falha) }
+        })
+      console.log(this.createForm.value);
+    }
   }
 
   processarSucesso(response: any) {
+    this.createForm.reset();
+    this.errors = [];
 
+    this.userService.LocalStorage.salvarDadosLocaisUsuario(response);
+
+    let toast = this.toastr.success('Registro realizado com sucesso!', 'Bem vindo(a)!');
+
+    if (toast) {
+      toast.onHidden.subscribe(() => {
+        this.router.navigate(['/home'])
+      });
+    }
   }
 
-  processarFalha() {
-
+  processarFalha(fail: any) {
+    this.errors = fail.errors;
+    this.toastr.error('Nome de usuário e/ou email já existente, tente outro', 'Opa :(');
   }
 }

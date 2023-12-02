@@ -7,6 +7,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { UserRoutingModule } from "./user.route";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
+import { UserService } from "./services/user.service";
+import { NarikCustomValidatorsModule } from "@narik/custom-validators";
 
 @NgModule({
     declarations: [
@@ -18,14 +20,15 @@ import { HttpClientModule } from "@angular/common/http";
         CommonModule,
         RouterModule,
         UserRoutingModule,
+        NarikCustomValidatorsModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
     ],
     exports: [
         LoginComponent,
         CreateUserComponent
     ],
-    providers: []
+    providers: [UserService]
 })
 export class UserModule { }

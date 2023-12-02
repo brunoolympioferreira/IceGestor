@@ -5,7 +5,7 @@ export class LocalStorageUtils {
 
     public salvarDadosLocaisUsuario(response: any) {
         this.salvarTokenUsuario(response.token);
-        this.salvarNomeUsuario(response.nome);
+        this.salvarNomeUsuario(response.username);
     }
 
     public limparDadosLocaisUsuario() {
@@ -21,7 +21,7 @@ export class LocalStorageUtils {
         localStorage.setItem('icegestor.token', token);
     }
 
-    public salvarNomeUsuario(userName: string) {
-        localStorage.setItem('icegestor.userName', JSON.stringify(userName));
+    public salvarNomeUsuario(username: string) {
+        localStorage.setItem('icegestor.username', JSON.stringify(username));
     }
 }
