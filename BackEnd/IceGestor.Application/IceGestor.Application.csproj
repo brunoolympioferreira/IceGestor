@@ -20,8 +20,4 @@
     <ProjectReference Include="..\IceGestor.Infra\IceGestor.Infra.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\User\UpdateUser\" />
-  </ItemGroup>
-
 </Project>
