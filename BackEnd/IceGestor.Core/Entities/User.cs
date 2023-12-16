@@ -16,13 +16,11 @@ public class User : BaseEntity
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
 
-    public User UpdateUser(User user)
+    public void UpdateUser(string password, string email)
     {
-        Password = user.Password;
-        Email = user.Email;
+        Password = password;
+        Email = email;
 
         UpdatedAt = DateTime.Now;
-
-        return user;
     }
 }

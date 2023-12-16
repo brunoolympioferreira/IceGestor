@@ -37,4 +37,11 @@ public class UserRepository : IUserRepository
             .AsNoTracking()
             .SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
     }
+
+    public async Task<User> GetUserById(int id)
+    {
+        return await _dbContext.Users
+            .AsNoTracking()
+            .SingleOrDefaultAsync(u => u.Id == id);
+    }
 }

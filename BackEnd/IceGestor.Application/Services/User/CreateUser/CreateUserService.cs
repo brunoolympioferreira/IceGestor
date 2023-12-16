@@ -10,18 +10,15 @@ public class CreateUserService : ICreateUserService
 {
     private readonly IUnityOfWork _unityOfWork;
     private readonly IAuthService _authService;
-    private readonly IloggerManager _logger;
-    public CreateUserService(IUnityOfWork unityOfWork, IAuthService authService, IloggerManager logger)
+    public CreateUserService(IUnityOfWork unityOfWork, IAuthService authService)
     {
         _unityOfWork = unityOfWork;
         _authService = authService;
-        _logger = logger;
     }
     public async Task<UserCreatedViewModel> Execute(CreateUserInputModel request)
     {
         try
         {
-            _logger.LogInfo("Teste Log Info");
             await Validate(request);
 
             string passwordHash = _authService.ComputeSha256Hash(request.Password);
@@ -47,8 +44,7 @@ public class CreateUserService : ICreateUserService
         }
         catch (IceGestorException ex)
         {
-            _logger.LogError(ex.Message, new IceGestorException(ex.Message));
-            throw;
+            throw new IceGestorException(ex.Message);
         }
 
     }
