@@ -26,8 +26,6 @@ builder.Services.AddApplication();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionsFilter)));
 
-//var allowedOrigin = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("IceGestorCors", policy =>
