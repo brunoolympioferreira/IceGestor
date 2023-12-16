@@ -5,6 +5,7 @@ public interface IUserRepository
 {
     //Commands
     Task AddAsync(User user);
+    void Update(User user);
 
     //Queries
     Task<bool> ExistsUserWithEmail(string email);

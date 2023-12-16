@@ -10,9 +10,15 @@ public class UserRepository : IUserRepository
     {
         _dbContext = dbContext;
     }
+
     public async Task AddAsync(User user)
     {
         await _dbContext.Users.AddAsync(user);
+    }
+
+    public void Update(User user)
+    {
+        _dbContext.Users.Update(user);
     }
 
     public async Task<bool> ExistsUserWithEmail(string email)

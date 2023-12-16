@@ -15,4 +15,14 @@ public class User : BaseEntity
     public string Email { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
+
+    public User UpdateUser(User user)
+    {
+        Password = user.Password;
+        Email = user.Email;
+
+        UpdatedAt = DateTime.Now;
+
+        return user;
+    }
 }
