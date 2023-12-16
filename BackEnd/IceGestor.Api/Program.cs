@@ -1,12 +1,11 @@
-using IceGestor.Api.Extensions;
 using IceGestor.Api.Filters;
-using IceGestor.CrossCutting.Nlog;
+using IceGestor.Application;
+using IceGestor.Infra;
 using IceGestor.Infra.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using NLog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +19,8 @@ builder.Services.AddDbContext<IceGestorDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
-builder.Services.AddDependencyInjections();
+builder.Services.AddInfra();
+builder.Services.AddApplication();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionsFilter)));
 
