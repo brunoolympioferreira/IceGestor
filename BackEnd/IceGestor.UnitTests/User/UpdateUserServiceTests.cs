@@ -1,7 +1,5 @@
-﻿using FluentAssertions;
-using IceGestor.Application.Authentication;
+﻿using IceGestor.Application.Authentication;
 using IceGestor.Application.Services.User.UpdateUser;
-using IceGestor.Core.Entities;
 using IceGestor.Core.RepositoriesInterfaces;
 using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.Infra.Persistence;
@@ -36,7 +34,7 @@ public class UpdateUserServiceTests
         };
 
         var service = new UpdateUserService(unityOfWork.Object, authService.Object);
-        
+
 
         await service.Execute(request);
 
