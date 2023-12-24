@@ -17,36 +17,28 @@ public class CreateUserService : ICreateUserService
     }
     public async Task<UserCreatedViewModel> Execute(CreateUserInputModel request)
     {
-        try
+        await Validate(request);
+
+        string passwordHash = _authService.ComputeSha256Hash(request.Password);
+
+        Core.Entities.User user = new(request.Username, passwordHash, request.Email);
+
+        await _unityOfWork.BeginTransactionAsync();
+
+        await _unityOfWork.Users.AddAsync(user);
+
+        await _unityOfWork.CompleteAsync();
+
+        await _unityOfWork.CommitAsync();
+
+        string token = _authService.GenerateJwtToken(user.Email, user.Username);
+
+        return new UserCreatedViewModel
         {
-            await Validate(request);
-
-            string passwordHash = _authService.ComputeSha256Hash(request.Password);
-
-            Core.Entities.User user = new(request.Username, passwordHash, request.Email);
-
-            await _unityOfWork.BeginTransactionAsync();
-
-            await _unityOfWork.Users.AddAsync(user);
-
-            await _unityOfWork.CompleteAsync();
-
-            await _unityOfWork.CommitAsync();
-
-            string token = _authService.GenerateJwtToken(user.Email, user.Username);
-
-            return new UserCreatedViewModel
-            {
-                Username = user.Username,
-                Email = user.Email,
-                Token = token
-            };
-        }
-        catch (IceGestorException ex)
-        {
-            throw new IceGestorException(ex.Message);
-        }
-
+            Username = user.Username,
+            Email = user.Email,
+            Token = token
+        };
     }
 
     private async Task Validate(CreateUserInputModel request)
