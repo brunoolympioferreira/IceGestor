@@ -19,7 +19,6 @@ public class CreateUserServiceTests
         var unityOfWork = new Mock<IUnityOfWork>();
         var authService = new Mock<IAuthService>();
         var userRepository = new Mock<IUserRepository>();
-        var logger = new Mock<IloggerManager>();
 
         unityOfWork.SetupGet(uow => uow.Users).Returns(userRepository.Object);
         var request = new CreateUserInputModel()
@@ -29,7 +28,7 @@ public class CreateUserServiceTests
             Password = "TestPass@123"
         };
 
-        var service = new CreateUserService(unityOfWork.Object, authService.Object, logger.Object);
+        var service = new CreateUserService(unityOfWork.Object, authService.Object);
 
         var response = await service.Execute(request);
         response.Token = "token-test";
@@ -57,7 +56,7 @@ public class CreateUserServiceTests
             Password = "password"
         };
 
-        var service = new CreateUserService(unityOfWork.Object, authService.Object, logger.Object);
+        var service = new CreateUserService(unityOfWork.Object, authService.Object);
 
         Func<Task> acao = async () => { await service.Execute(request); };
 

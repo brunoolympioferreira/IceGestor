@@ -1,5 +1,6 @@
 ﻿using IceGestor.Application.Services.User.CreateUser;
 using IceGestor.Application.Services.User.Login;
+using IceGestor.Application.Services.User.UpdateUser;
 using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.CrossCutting.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
@@ -12,10 +13,12 @@ public class UserController : ControllerBase
 {
     private readonly ICreateUserService _createUserService;
     private readonly IUserLoginService _loginUserService;
-    public UserController(ICreateUserService createUserService, IUserLoginService loginUserService)
+    private readonly IUpdateUserService _updateUserService;
+    public UserController(ICreateUserService createUserService, IUserLoginService loginUserService, IUpdateUserService updateUserService)
     {
         _createUserService = createUserService;
         _loginUserService = loginUserService;
+        _updateUserService = updateUserService;
     }
 
     [HttpPost]
@@ -35,5 +38,14 @@ public class UserController : ControllerBase
         if (loginUserViewModel == null) return BadRequest();
 
         return Ok(loginUserViewModel);
+    }
+
+    [HttpPut("update")]
+    [Authorize]
+    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserInputModel request)
+    {
+        await _updateUserService.Execute(request);
+
+        return NoContent();
     }
 }

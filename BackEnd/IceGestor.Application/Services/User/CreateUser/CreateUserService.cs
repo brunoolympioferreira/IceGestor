@@ -10,47 +10,35 @@ public class CreateUserService : ICreateUserService
 {
     private readonly IUnityOfWork _unityOfWork;
     private readonly IAuthService _authService;
-    private readonly IloggerManager _logger;
-    public CreateUserService(IUnityOfWork unityOfWork, IAuthService authService, IloggerManager logger)
+    public CreateUserService(IUnityOfWork unityOfWork, IAuthService authService)
     {
         _unityOfWork = unityOfWork;
         _authService = authService;
-        _logger = logger;
     }
     public async Task<UserCreatedViewModel> Execute(CreateUserInputModel request)
     {
-        try
+        await Validate(request);
+
+        string passwordHash = _authService.ComputeSha256Hash(request.Password);
+
+        Core.Entities.User user = new(request.Username, passwordHash, request.Email);
+
+        await _unityOfWork.BeginTransactionAsync();
+
+        await _unityOfWork.Users.AddAsync(user);
+
+        await _unityOfWork.CompleteAsync();
+
+        await _unityOfWork.CommitAsync();
+
+        string token = _authService.GenerateJwtToken(user.Email, user.Username);
+
+        return new UserCreatedViewModel
         {
-            _logger.LogInfo("Teste Log Info");
-            await Validate(request);
-
-            string passwordHash = _authService.ComputeSha256Hash(request.Password);
-
-            Core.Entities.User user = new(request.Username, passwordHash, request.Email);
-
-            await _unityOfWork.BeginTransactionAsync();
-
-            await _unityOfWork.Users.AddAsync(user);
-
-            await _unityOfWork.CompleteAsync();
-
-            await _unityOfWork.CommitAsync();
-
-            string token = _authService.GenerateJwtToken(user.Email, user.Username);
-
-            return new UserCreatedViewModel
-            {
-                Username = user.Username,
-                Email = user.Email,
-                Token = token
-            };
-        }
-        catch (IceGestorException ex)
-        {
-            _logger.LogError(ex.Message, new IceGestorException(ex.Message));
-            throw;
-        }
-
+            Username = user.Username,
+            Email = user.Email,
+            Token = token
+        };
     }
 
     private async Task Validate(CreateUserInputModel request)

@@ -1,6 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
 namespace IceGestor.CrossCutting.Exceptions;
+
+[Serializable]
 public class ValidationErrorsException : IceGestorException
 {
     public List<string> ErrorMessages { get; set; }
