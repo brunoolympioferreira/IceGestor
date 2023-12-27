@@ -9,6 +9,7 @@ public class IceGestorDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<Log> Logs { get; set; }
+    public DbSet<Flavor> Flavors { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -5,7 +5,8 @@ public interface IFlavorRepository
 {
     Task Add(Flavor flavor);
     void Update(Flavor flavor);
+    Task Delete(int id);
 
     Task<Flavor> GetFlavorById(int id);
-    IEnumerable<Flavor> GetAll();
+    Task<List<Flavor>> GetAll();
 }
