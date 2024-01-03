@@ -1,6 +1,6 @@
 ﻿using IceGestor.Application.Authentication;
+using IceGestor.Application.Models.InputModels.User;
 using IceGestor.CrossCutting.Exceptions;
-using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.Infra.Persistence;
 
 namespace IceGestor.Application.Services.User.UpdateUser;

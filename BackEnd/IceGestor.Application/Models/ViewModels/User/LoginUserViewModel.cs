@@ -1,4 +1,4 @@
-﻿namespace IceGestor.CrossCutting.ViewModels.User;
+﻿namespace IceGestor.Application.Models.ViewModels.User;
 public class LoginUserViewModel
 {
     public LoginUserViewModel(string email, string token)

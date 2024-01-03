@@ -1,8 +1,8 @@
-﻿using IceGestor.Application.Services.User.CreateUser;
+﻿using IceGestor.Application.Models.InputModels.User;
+using IceGestor.Application.Models.ViewModels.User;
+using IceGestor.Application.Services.User.CreateUser;
 using IceGestor.Application.Services.User.Login;
 using IceGestor.Application.Services.User.UpdateUser;
-using IceGestor.CrossCutting.InputModels.User;
-using IceGestor.CrossCutting.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
