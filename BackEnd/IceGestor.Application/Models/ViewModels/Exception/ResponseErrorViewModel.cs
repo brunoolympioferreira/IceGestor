@@ -1,10 +1,10 @@
-﻿namespace IceGestor.CrossCutting.ViewModels.Exception;
+﻿namespace IceGestor.Application.Models.ViewModels.Exception;
 public class ResponseErrorViewModel
 {
     public List<string> Messages { get; set; }
     public ResponseErrorViewModel(List<string> messages)
     {
-        Messages = messages;   
+        Messages = messages;
     }
     public ResponseErrorViewModel(string message)
     {

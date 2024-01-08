@@ -1,4 +1,4 @@
-﻿namespace IceGestor.CrossCutting.ViewModels.User;
+﻿namespace IceGestor.Application.Models.ViewModels.User;
 public class UserCreatedViewModel
 {
     public string Token { get; set; }

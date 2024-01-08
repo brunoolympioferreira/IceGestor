@@ -10,7 +10,8 @@ public static class InfraModule
     {
         services
             .AddScoped<IUnityOfWork, UnityOfWork>()
-            .AddScoped<IUserRepository, UserRepository>();
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IFlavorRepository, FlavorRepository>();
 
         return services;
     }

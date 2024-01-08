@@ -1,4 +1,4 @@
-﻿namespace IceGestor.CrossCutting.InputModels.User;
+﻿namespace IceGestor.Application.Models.InputModels.User;
 public class LoginUserInputModel
 {
     public string Email { get; set; }

@@ -1,5 +1,5 @@
-﻿using IceGestor.CrossCutting.Exceptions;
-using IceGestor.CrossCutting.ViewModels.Exception;
+﻿using IceGestor.Application.Models.ViewModels.Exception;
+using IceGestor.CrossCutting.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
