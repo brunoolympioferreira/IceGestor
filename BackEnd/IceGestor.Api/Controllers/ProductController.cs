@@ -16,7 +16,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost("Flavor")]
-    public async Task<IActionResult> CreateFlavor([FromBody] CreateFlavorInputModel inputModel)
+    public async Task<IActionResult> CreateFlavor([FromBody] FlavorInputModel inputModel)
     {
         BaseResult result = await _createFlavorService.Execute(inputModel);
 

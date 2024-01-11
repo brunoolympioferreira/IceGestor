@@ -10,3 +10,13 @@ public class BaseResult
     public bool Success { get; private set; }
     public string Message { get; private set; }
 }
+
+public class BaseResult<T> : BaseResult
+{
+    public BaseResult(T data, bool success = true, string message = "") : base(success, message)
+    {
+        Data = data;
+    }
+
+    public T Data { get; set; }
+}

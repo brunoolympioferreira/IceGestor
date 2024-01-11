@@ -11,7 +11,7 @@ public class CreateFlavorService : ICreateFlavorService
     {
         _unityOfWork = unityOfWork;
     }
-    public async Task<BaseResult> Execute(CreateFlavorInputModel request)
+    public async Task<BaseResult> Execute(FlavorInputModel request)
     {
         Validate(request);
 
@@ -28,7 +28,7 @@ public class CreateFlavorService : ICreateFlavorService
         return new BaseResult();
     }
 
-    private static void Validate(CreateFlavorInputModel request)
+    private static void Validate(FlavorInputModel request)
     {
         var validator = new CreateFlavorValidator();
         var result = validator.Validate(request);

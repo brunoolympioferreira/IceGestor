@@ -4,5 +4,5 @@ using IceGestor.Application.Models.ViewModels;
 namespace IceGestor.Application.Services.Product.Flavor.CreateFlavor;
 public interface ICreateFlavorService
 {
-    Task<BaseResult> Execute(CreateFlavorInputModel request);
+    Task<BaseResult> Execute(FlavorInputModel request);
 }
