@@ -2,7 +2,7 @@
 using IceGestor.Application.Models.InputModels.Product;
 
 namespace IceGestor.Application.Services.Product.Flavor.CreateFlavor;
-public class CreateFlavorValidator : AbstractValidator<CreateFlavorInputModel>
+public class CreateFlavorValidator : AbstractValidator<FlavorInputModel>
 {
     public CreateFlavorValidator()
     {

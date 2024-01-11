@@ -1,5 +1,6 @@
 ﻿using IceGestor.Application.Authentication;
 using IceGestor.Application.Services.Product.Flavor.CreateFlavor;
+using IceGestor.Application.Services.Product.Flavor.GetFlavors;
 using IceGestor.Application.Services.User.CreateUser;
 using IceGestor.Application.Services.User.Login;
 using IceGestor.Application.Services.User.UpdateUser;
@@ -38,7 +39,9 @@ public static class ApplicationModule
     private static IServiceCollection AddProductModule(this IServiceCollection services) 
     {
         services
-            .AddScoped<ICreateFlavorService, CreateFlavorService>();
+            .AddScoped<ICreateFlavorService, CreateFlavorService>()
+            .AddScoped<IGetFlavorsService, GetFlavorsService>();
+
 
         return services;
     }

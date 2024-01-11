@@ -10,5 +10,6 @@ public class ValidationErrorsException : IceGestorException
     {
         ErrorMessages = errorMessages;
     }
+    public ValidationErrorsException(string errorMessage) : base(errorMessage) { }
     protected ValidationErrorsException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
