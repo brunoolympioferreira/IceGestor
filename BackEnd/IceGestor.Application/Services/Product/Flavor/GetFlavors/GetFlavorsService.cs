@@ -23,8 +23,12 @@ public class GetFlavorsService : IGetFlavorsService
 
     }
 
-    public Task<BaseResult<FlavorViewModel>> GetById(int id)
+    public async Task<BaseResult<FlavorViewModel>> GetById(int id)
     {
-        throw new NotImplementedException();
+        var flavor = await _unityOfWork.Flavors.GetFlavorById(id);
+
+        var viewModel = new FlavorViewModel(flavor);
+
+        return new BaseResult<FlavorViewModel>(viewModel);
     }
 }

@@ -33,4 +33,12 @@ public class ProductController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("flavor/{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var result = await _getFlavorsService.GetById(id);
+
+        return Ok(result);
+    }
 }
