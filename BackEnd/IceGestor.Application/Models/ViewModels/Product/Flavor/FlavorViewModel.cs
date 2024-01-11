@@ -9,6 +9,11 @@ public class FlavorViewModel
         Description = flavor.Description;
     }
 
+    public FlavorViewModel()
+    {
+        
+    }
+
     public string Name { get; private set; }
     public string Description { get; private set; }
 }

@@ -1,6 +1,7 @@
 ﻿using IceGestor.Application.Models.InputModels.Product;
 using IceGestor.Application.Models.ViewModels;
 using IceGestor.Application.Models.ViewModels.Product.Flavor;
+using IceGestor.CrossCutting.Exceptions;
 using IceGestor.Infra.Persistence;
 
 namespace IceGestor.Application.Services.Product.Flavor.GetFlavors;
@@ -25,7 +26,7 @@ public class GetFlavorsService : IGetFlavorsService
 
     public async Task<BaseResult<FlavorViewModel>> GetById(int id)
     {
-        var flavor = await _unityOfWork.Flavors.GetFlavorById(id);
+        var flavor = await _unityOfWork.Flavors.GetFlavorById(id) ?? throw new ValidationErrorsException("O id espeficicado não existe");
 
         var viewModel = new FlavorViewModel(flavor);
 
