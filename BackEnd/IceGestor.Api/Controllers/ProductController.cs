@@ -2,6 +2,7 @@
 using IceGestor.Application.Models.ViewModels;
 using IceGestor.Application.Services.Product.Flavor.CreateFlavor;
 using IceGestor.Application.Services.Product.Flavor.GetFlavors;
+using IceGestor.Application.Services.Product.Flavor.UpdateFlavor;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IceGestor.Api.Controllers;
@@ -40,5 +41,15 @@ public class ProductController : ControllerBase
         var result = await _getFlavorsService.GetById(id);
 
         return Ok(result);
+    }
+
+    [HttpPut("flavor/{id}")]
+    public async Task<IActionResult> Update(
+        [FromServices] IUpdateFlavorService updateFlavorService,
+        int id, [FromBody] FlavorInputModel model)
+    {
+        await updateFlavorService.Update(id, model);
+
+        return NoContent();
     }
 }
