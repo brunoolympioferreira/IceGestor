@@ -1,6 +1,7 @@
 ﻿using IceGestor.Application.Models.InputModels.Product;
 using IceGestor.Application.Models.ViewModels;
 using IceGestor.Application.Services.Product.Flavor.CreateFlavor;
+using IceGestor.Application.Services.Product.Flavor.DeleteFlavor;
 using IceGestor.Application.Services.Product.Flavor.GetFlavors;
 using IceGestor.Application.Services.Product.Flavor.UpdateFlavor;
 using Microsoft.AspNetCore.Authorization;
@@ -53,5 +54,13 @@ public class ProductController : ControllerBase
         await updateFlavorService.Update(id, model);
 
         return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromServices] IDeleteFlavorService deleteFlavorService,int id)
+    {
+        var result = await deleteFlavorService.Delete(id);
+
+        return Ok(result);
     }
 }

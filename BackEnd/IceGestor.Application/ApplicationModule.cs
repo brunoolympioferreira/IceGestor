@@ -1,5 +1,6 @@
 ﻿using IceGestor.Application.Authentication;
 using IceGestor.Application.Services.Product.Flavor.CreateFlavor;
+using IceGestor.Application.Services.Product.Flavor.DeleteFlavor;
 using IceGestor.Application.Services.Product.Flavor.GetFlavors;
 using IceGestor.Application.Services.Product.Flavor.UpdateFlavor;
 using IceGestor.Application.Services.User.CreateUser;
@@ -42,7 +43,9 @@ public static class ApplicationModule
         services
             .AddScoped<ICreateFlavorService, CreateFlavorService>()
             .AddScoped<IGetFlavorsService, GetFlavorsService>()
-            .AddScoped<IUpdateFlavorService, UpdateFlavorService>();
+            .AddScoped<IUpdateFlavorService, UpdateFlavorService>()
+            .AddScoped<IDeleteFlavorService, DeleteFlavorService>();
+
 
         return services;
     }
