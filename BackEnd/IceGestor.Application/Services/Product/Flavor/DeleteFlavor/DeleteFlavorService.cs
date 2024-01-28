@@ -15,6 +15,8 @@ public class DeleteFlavorService : IDeleteFlavorService
     {
         await _unityOfWork.Flavors.Delete(id);
 
+        await _unityOfWork.CompleteAsync();
+
         return new BaseResult();
     }
 }
