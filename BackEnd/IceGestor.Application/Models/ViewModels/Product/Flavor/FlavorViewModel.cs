@@ -5,6 +5,7 @@ public class FlavorViewModel
 {
     public FlavorViewModel(Core.Entities.Flavor flavor)
     {
+        Id = flavor.Id;
         Name = flavor.Name;
         Description = flavor.Description;
     }
@@ -14,6 +15,7 @@ public class FlavorViewModel
         
     }
 
+    public int Id { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
 }
