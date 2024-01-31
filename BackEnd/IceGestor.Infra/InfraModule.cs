@@ -11,7 +11,8 @@ public static class InfraModule
         services
             .AddScoped<IUnityOfWork, UnityOfWork>()
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IFlavorRepository, FlavorRepository>();
+            .AddScoped<IFlavorRepository, FlavorRepository>()
+            .AddScoped<ICategoryRepository, CategoryRepository>();
 
         return services;
     }
