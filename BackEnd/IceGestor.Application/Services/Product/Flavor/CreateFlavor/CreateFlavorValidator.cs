@@ -9,7 +9,7 @@ public class CreateFlavorValidator : AbstractValidator<FlavorInputModel>
         RuleFor(f => f.Name)
             .NotEmpty()
             .NotNull()
-            .WithMessage("Esta campo não pode ser vazio ou nulo.");
+            .WithMessage("Este campo não pode ser vazio ou nulo.");
 
         RuleFor(f => f.Description)
             .NotEmpty()
