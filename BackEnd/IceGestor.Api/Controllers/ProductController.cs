@@ -72,4 +72,12 @@ public class ProductController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("category")]
+    public async Task<IActionResult> GetAll([FromServices] ICategoryService categoryService)
+    {
+        var result = await categoryService.GetAll();
+
+        return Ok(result);
+    }
 }

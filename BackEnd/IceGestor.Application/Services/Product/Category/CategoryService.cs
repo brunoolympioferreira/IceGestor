@@ -1,5 +1,6 @@
 ﻿using IceGestor.Application.Models.InputModels.Product;
 using IceGestor.Application.Models.ViewModels;
+using IceGestor.Application.Models.ViewModels.Product.Category;
 using IceGestor.Core.Entities;
 using IceGestor.CrossCutting.Exceptions;
 using IceGestor.Infra.Persistence;
@@ -23,6 +24,15 @@ public class CategoryService : ICategoryService
         await _unityOfWork.CompleteAsync();
 
         return new BaseResult<int>(category.Id);
+    }
+
+    public async Task<BaseResult<List<CategoryViewModel>>> GetAll()
+    {
+        var categories = await _unityOfWork.Categories.GetAllAsync();
+
+        var viewModels = categories.Select(c => new CategoryViewModel(c)).ToList();
+
+        return new BaseResult<List<CategoryViewModel>>(viewModels);
     }
 
     private static void Validate(CategoryInputModel request) 
