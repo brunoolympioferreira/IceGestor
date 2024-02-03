@@ -19,4 +19,9 @@ public class CategoryRepository : ICategoryRepository
     {
         return _context.Categories.AsNoTracking().ToListAsync();
     }
+
+    public Task<Category> GetByIdAsync(int id)
+    {
+        return _context.Categories.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id);
+    }
 }

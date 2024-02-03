@@ -35,6 +35,15 @@ public class CategoryService : ICategoryService
         return new BaseResult<List<CategoryViewModel>>(viewModels);
     }
 
+    public async Task<BaseResult<CategoryViewModel>> GetById(int id)
+    {
+        var category = await _unityOfWork.Categories.GetByIdAsync(id) ?? throw new ValidationErrorsException("O id espeficicado não existe");
+
+        var viewModel = new CategoryViewModel(category);
+
+        return new BaseResult<CategoryViewModel>(viewModel);
+    }
+
     private static void Validate(CategoryInputModel request) 
     {
         var validator = new CategoryValidator();

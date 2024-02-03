@@ -7,4 +7,5 @@ public interface ICategoryService
 {
     Task<BaseResult<int>> Create(CategoryInputModel model);
     Task<BaseResult<List<CategoryViewModel>>> GetAll();
+    Task<BaseResult<CategoryViewModel>> GetById(int id);
 }
