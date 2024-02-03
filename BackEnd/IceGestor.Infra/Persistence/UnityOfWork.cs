@@ -9,13 +9,19 @@ public class UnityOfWork : IUnityOfWork
     private readonly IceGestorDbContext _context;
     public UnityOfWork(
         IceGestorDbContext context,
-        IUserRepository users)
+        IUserRepository users,
+        IFlavorRepository flavors,
+        ICategoryRepository categories)
     {
         _context = context;
         Users = users;
-
+        Flavors = flavors;
+        Categories = categories;
     }
     public IUserRepository Users { get; }
+
+    public IFlavorRepository Flavors { get; }
+    public ICategoryRepository Categories { get; }
 
     public async Task BeginTransactionAsync()
     {

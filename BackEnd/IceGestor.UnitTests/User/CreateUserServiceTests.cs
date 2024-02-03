@@ -1,9 +1,9 @@
 using FluentAssertions;
 using IceGestor.Application.Authentication;
+using IceGestor.Application.Models.InputModels.User;
 using IceGestor.Application.Services.User.CreateUser;
 using IceGestor.Core.RepositoriesInterfaces;
 using IceGestor.CrossCutting.Exceptions;
-using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.CrossCutting.Nlog;
 using IceGestor.Infra.Persistence;
 using Moq;

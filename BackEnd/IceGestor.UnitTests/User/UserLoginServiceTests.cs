@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
 using IceGestor.Application.Authentication;
+using IceGestor.Application.Models.InputModels.User;
 using IceGestor.Application.Services.User.Login;
 using IceGestor.Core.Entities;
 using IceGestor.Core.RepositoriesInterfaces;
 using IceGestor.CrossCutting.Exceptions;
-using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.Infra.Persistence;
 using Moq;
 

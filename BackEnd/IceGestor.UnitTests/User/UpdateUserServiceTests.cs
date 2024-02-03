@@ -1,7 +1,7 @@
 ﻿using IceGestor.Application.Authentication;
+using IceGestor.Application.Models.InputModels.User;
 using IceGestor.Application.Services.User.UpdateUser;
 using IceGestor.Core.RepositoriesInterfaces;
-using IceGestor.CrossCutting.InputModels.User;
 using IceGestor.Infra.Persistence;
 using Moq;
 

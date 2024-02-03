@@ -1,4 +1,9 @@
 ﻿using IceGestor.Application.Authentication;
+using IceGestor.Application.Services.Product.Category;
+using IceGestor.Application.Services.Product.Flavor.CreateFlavor;
+using IceGestor.Application.Services.Product.Flavor.DeleteFlavor;
+using IceGestor.Application.Services.Product.Flavor.GetFlavors;
+using IceGestor.Application.Services.Product.Flavor.UpdateFlavor;
 using IceGestor.Application.Services.User.CreateUser;
 using IceGestor.Application.Services.User.Login;
 using IceGestor.Application.Services.User.UpdateUser;
@@ -12,6 +17,7 @@ public static class ApplicationModule
     {
         AddCrossCuttingModule(services);
         AddUserModule(services);
+        AddProductModule(services);
     }
 
     private static IServiceCollection AddCrossCuttingModule(this IServiceCollection services)
@@ -29,6 +35,18 @@ public static class ApplicationModule
             .AddScoped<ICreateUserService, CreateUserService>()
             .AddScoped<IUserLoginService, UserLoginService>()
             .AddScoped<IUpdateUserService, UpdateUserService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddProductModule(this IServiceCollection services) 
+    {
+        services
+            .AddScoped<ICreateFlavorService, CreateFlavorService>()
+            .AddScoped<IGetFlavorsService, GetFlavorsService>()
+            .AddScoped<IUpdateFlavorService, UpdateFlavorService>()
+            .AddScoped<IDeleteFlavorService, DeleteFlavorService>()
+            .AddScoped<ICategoryService, CategoryService>();
 
         return services;
     }

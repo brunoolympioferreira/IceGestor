@@ -1,4 +1,4 @@
-﻿using IceGestor.CrossCutting.InputModels.User;
+﻿using IceGestor.Application.Models.InputModels.User;
 
 namespace IceGestor.Application.Services.User.UpdateUser;
 public interface IUpdateUserService

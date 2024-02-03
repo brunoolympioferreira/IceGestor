@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using IceGestor.CrossCutting.InputModels.User;
+using IceGestor.Application.Models.InputModels.User;
 using System.Text.RegularExpressions;
 
 namespace IceGestor.Application.Services.User.UpdateUser;

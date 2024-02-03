@@ -1,5 +1,6 @@
-﻿using IceGestor.CrossCutting.Exceptions;
-using IceGestor.CrossCutting.ViewModels.Exception;
+﻿using IceGestor.Application.Models.ViewModels;
+using IceGestor.Application.Models.ViewModels.Exception;
+using IceGestor.CrossCutting.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
@@ -26,7 +27,10 @@ public class ExceptionsFilter : IExceptionFilter
         var validationErrorException = context.Exception as ValidationErrorsException;
 
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-        context.Result = new ObjectResult(new ResponseErrorViewModel(validationErrorException.ErrorMessages));
+        if (validationErrorException.ErrorMessages is not null)
+            context.Result = new ObjectResult(new ResponseErrorViewModel(validationErrorException.ErrorMessages));
+        else
+            context.Result = new ObjectResult(new BaseResult(false, validationErrorException.Message));
     }
 
     private static void ThrowUnknownError(ExceptionContext context)
