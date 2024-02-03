@@ -73,6 +73,16 @@ public class ProductController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPut("category/{id}")]
+    public async Task<IActionResult> UpdateCategory(
+    [FromServices] ICategoryService categoryService,
+    int id, [FromBody] CategoryInputModel model)
+    {
+        await categoryService.Update(id, model);
+
+        return NoContent();
+    }
+
     [HttpGet("category")]
     public async Task<IActionResult> GetAllCategories([FromServices] ICategoryService categoryService)
     {

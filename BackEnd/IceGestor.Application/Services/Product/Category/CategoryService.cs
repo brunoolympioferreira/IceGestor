@@ -26,6 +26,19 @@ public class CategoryService : ICategoryService
         return new BaseResult<int>(category.Id);
     }
 
+    public async Task Update(int id, CategoryInputModel request)
+    {
+        Validate(request);
+
+        Core.Entities.Category category = await _unityOfWork.Categories.GetByIdAsync(id);
+
+        category.Update(request.Name);
+
+        _unityOfWork.Categories.Update(category);
+
+        await _unityOfWork.CompleteAsync();
+    }
+
     public async Task<BaseResult<List<CategoryViewModel>>> GetAll()
     {
         var categories = await _unityOfWork.Categories.GetAllAsync();
