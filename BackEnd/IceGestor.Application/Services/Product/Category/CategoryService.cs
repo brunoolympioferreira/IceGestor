@@ -26,6 +26,19 @@ public class CategoryService : ICategoryService
         return new BaseResult<int>(category.Id);
     }
 
+    public async Task Update(int id, CategoryInputModel request)
+    {
+        Validate(request);
+
+        Core.Entities.Category category = await _unityOfWork.Categories.GetByIdAsync(id);
+
+        category.Update(request.Name);
+
+        _unityOfWork.Categories.Update(category);
+
+        await _unityOfWork.CompleteAsync();
+    }
+
     public async Task<BaseResult<List<CategoryViewModel>>> GetAll()
     {
         var categories = await _unityOfWork.Categories.GetAllAsync();
@@ -33,6 +46,24 @@ public class CategoryService : ICategoryService
         var viewModels = categories.Select(c => new CategoryViewModel(c)).ToList();
 
         return new BaseResult<List<CategoryViewModel>>(viewModels);
+    }
+
+    public async Task<BaseResult<CategoryViewModel>> GetById(int id)
+    {
+        var category = await _unityOfWork.Categories.GetByIdAsync(id) ?? throw new ValidationErrorsException("O id espeficicado não existe");
+
+        var viewModel = new CategoryViewModel(category);
+
+        return new BaseResult<CategoryViewModel>(viewModel);
+    }
+
+    public async Task<BaseResult> Delete(int id)
+    {
+        await _unityOfWork.Categories.Delete(id);
+
+        await _unityOfWork.CompleteAsync();
+
+        return new BaseResult();
     }
 
     private static void Validate(CategoryInputModel request) 

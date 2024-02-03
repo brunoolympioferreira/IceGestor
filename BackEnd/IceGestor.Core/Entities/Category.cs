@@ -7,4 +7,9 @@ public class Category : BaseEntity
     }
 
     public string Name { get; private set; }
+
+    public void Update(string name)
+    {
+        Name = name;
+    }
 }

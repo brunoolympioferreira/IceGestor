@@ -32,7 +32,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("flavors")]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAllFlavors()
     {
         var result = await _getFlavorsService.GetAll();
 
@@ -40,7 +40,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("flavor/{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetFlavorById(int id)
     {
         var result = await _getFlavorsService.GetById(id);
 
@@ -48,7 +48,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPut("flavor/{id}")]
-    public async Task<IActionResult> Update(
+    public async Task<IActionResult> UpdateFlavor(
         [FromServices] IUpdateFlavorService updateFlavorService,
         int id, [FromBody] FlavorInputModel model)
     {
@@ -58,7 +58,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpDelete("flavor/{id}")]
-    public async Task<IActionResult> Delete([FromServices] IDeleteFlavorService deleteFlavorService,int id)
+    public async Task<IActionResult> DeleteFlavor([FromServices] IDeleteFlavorService deleteFlavorService,int id)
     {
         var result = await deleteFlavorService.Delete(id);
 
@@ -66,17 +66,43 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost("category")]
-    public async Task<IActionResult> Create([FromServices] ICategoryService categoryService, [FromBody] CategoryInputModel inputModel)
+    public async Task<IActionResult> CreateCategory([FromServices] ICategoryService categoryService, [FromBody] CategoryInputModel inputModel)
     {
         BaseResult result = await categoryService.Create(inputModel);
 
         return Ok(result);
     }
 
+    [HttpPut("category/{id}")]
+    public async Task<IActionResult> UpdateCategory(
+    [FromServices] ICategoryService categoryService,
+    int id, [FromBody] CategoryInputModel model)
+    {
+        await categoryService.Update(id, model);
+
+        return NoContent();
+    }
+
     [HttpGet("category")]
-    public async Task<IActionResult> GetAll([FromServices] ICategoryService categoryService)
+    public async Task<IActionResult> GetAllCategories([FromServices] ICategoryService categoryService)
     {
         var result = await categoryService.GetAll();
+
+        return Ok(result);
+    }
+
+    [HttpGet("category/{id}")]
+    public async Task<IActionResult> GetCategoryById([FromServices] ICategoryService categoryService, int id)
+    {
+        var result = await categoryService.GetById(id);
+
+        return Ok(result);
+    }
+
+    [HttpDelete("category/{id}")]
+    public async Task<IActionResult> DeleteCategory([FromServices] ICategoryService categoryService, int id)
+    {
+        var result = await categoryService.Delete(id);
 
         return Ok(result);
     }
