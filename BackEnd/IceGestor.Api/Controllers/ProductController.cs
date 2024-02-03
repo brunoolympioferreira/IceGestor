@@ -88,4 +88,12 @@ public class ProductController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpDelete("category/{id}")]
+    public async Task<IActionResult> DeleteCategory([FromServices] ICategoryService categoryService, int id)
+    {
+        var result = await categoryService.Delete(id);
+
+        return Ok(result);
+    }
 }

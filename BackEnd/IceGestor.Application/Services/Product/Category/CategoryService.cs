@@ -44,6 +44,15 @@ public class CategoryService : ICategoryService
         return new BaseResult<CategoryViewModel>(viewModel);
     }
 
+    public async Task<BaseResult> Delete(int id)
+    {
+        await _unityOfWork.Categories.Delete(id);
+
+        await _unityOfWork.CompleteAsync();
+
+        return new BaseResult();
+    }
+
     private static void Validate(CategoryInputModel request) 
     {
         var validator = new CategoryValidator();
