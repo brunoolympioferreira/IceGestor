@@ -2,10 +2,15 @@
 using IceGestor.Core.RepositoriesInterfaces;
 
 namespace IceGestor.Infra.Persistence.Repositories;
-internal class ProductRepository : IProductRepository
+public class ProductRepository : IProductRepository
 {
-    public Task AddAsync(Product product)
+    private readonly IceGestorDbContext _context;
+    public ProductRepository(IceGestorDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
+    }
+    public async Task AddAsync(Product product)
+    {
+        await _context.Products.AddAsync(product);
     }
 }
