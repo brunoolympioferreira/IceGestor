@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IceGestor.Infra.Persistence.Migrations
 {
     [DbContext(typeof(IceGestorDbContext))]
-    [Migration("20240214143111_AddTableProducts")]
+    [Migration("20240214150824_AddTableProducts")]
     partial class AddTableProducts
     {
         /// <inheritdoc />
@@ -91,13 +91,13 @@ namespace IceGestor.Infra.Persistence.Migrations
                         .HasPrecision(4, 2)
                         .HasColumnType("decimal(4,2)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("IdCategory")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdFlavor")
+                    b.Property<int>("FlavorId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -105,11 +105,9 @@ namespace IceGestor.Infra.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCategory")
-                        .IsUnique();
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("IdFlavor")
-                        .IsUnique();
+                    b.HasIndex("FlavorId");
 
                     b.ToTable("Products");
                 });
@@ -143,30 +141,20 @@ namespace IceGestor.Infra.Persistence.Migrations
             modelBuilder.Entity("IceGestor.Core.Entities.Product", b =>
                 {
                     b.HasOne("IceGestor.Core.Entities.Category", "Category")
-                        .WithOne("Product")
-                        .HasForeignKey("IceGestor.Core.Entities.Product", "IdCategory")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("IceGestor.Core.Entities.Flavor", "Flavor")
-                        .WithOne("Product")
-                        .HasForeignKey("IceGestor.Core.Entities.Product", "IdFlavor")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .WithMany()
+                        .HasForeignKey("FlavorId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
 
                     b.Navigation("Flavor");
-                });
-
-            modelBuilder.Entity("IceGestor.Core.Entities.Category", b =>
-                {
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("IceGestor.Core.Entities.Flavor", b =>
-                {
-                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

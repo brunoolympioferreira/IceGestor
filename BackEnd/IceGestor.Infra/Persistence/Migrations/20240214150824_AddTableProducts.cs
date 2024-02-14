@@ -21,36 +21,36 @@ namespace IceGestor.Infra.Persistence.Migrations
                     Amount = table.Column<decimal>(type: "decimal(4,2)", precision: 4, scale: 2, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IdFlavor = table.Column<int>(type: "int", nullable: false),
-                    IdCategory = table.Column<int>(type: "int", nullable: false)
+                    FlavorId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_IdCategory",
-                        column: x => x.IdCategory,
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_Flavors_IdFlavor",
-                        column: x => x.IdFlavor,
+                        name: "FK_Products_Flavors_FlavorId",
+                        column: x => x.FlavorId,
                         principalTable: "Flavors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_IdCategory",
+                name: "IX_Products_CategoryId",
                 table: "Products",
-                column: "IdCategory",
-                unique: true);
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_IdFlavor",
+                name: "IX_Products_FlavorId",
                 table: "Products",
-                column: "IdFlavor",
-                unique: true);
+                column: "FlavorId");
         }
 
         /// <inheritdoc />

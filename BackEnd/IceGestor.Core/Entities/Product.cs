@@ -1,11 +1,11 @@
 ﻿namespace IceGestor.Core.Entities;
 public class Product : BaseEntity
 {
-    public Product(decimal amount, int idFlavor, int idCategory)
+    public Product(decimal amount, int flavorId, int categoryId)
     {
         Amount = amount;
-        IdFlavor = idFlavor;
-        IdCategory = idCategory;
+        FlavorId = flavorId;
+        CategoryId = categoryId;
 
         CreatedAt = DateTime.Now;
     }
@@ -13,8 +13,8 @@ public class Product : BaseEntity
     public decimal Amount { get; private set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public int IdFlavor { get; set; }
-    public int IdCategory { get; set; }
+    public int FlavorId { get; set; }
+    public int CategoryId { get; set; }
 
     public virtual Flavor Flavor { get; set; }
     public virtual Category Category { get; set; }
