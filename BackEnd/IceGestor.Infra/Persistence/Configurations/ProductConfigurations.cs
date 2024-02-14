@@ -9,16 +9,16 @@ public class ProductConfigurations : IEntityTypeConfiguration<Product>
     {
         builder.HasKey(p => p.Id);
 
-        builder.Property(p => p.Amount).IsRequired();
+        builder.Property(p => p.Amount).HasPrecision(4,2).IsRequired();
 
         builder
             .HasOne(p => p.Flavor)
             .WithOne(f => f.Product)
-            .HasForeignKey<Flavor>(f => f.Id).OnDelete(DeleteBehavior.NoAction);
+            .HasForeignKey<Product>(p => p.IdFlavor).OnDelete(DeleteBehavior.NoAction);
 
         builder
             .HasOne(p => p.Category)
             .WithOne(c => c.Product)
-            .HasForeignKey<Category>(c => c.Id).OnDelete(DeleteBehavior.NoAction);
+            .HasForeignKey<Product>(p => p.IdCategory).OnDelete(DeleteBehavior.NoAction);
     }
 }

@@ -8,7 +8,7 @@ public class Category : BaseEntity
 
     public string Name { get; private set; }
 
-    public Product Product { get; set; }
+    public virtual Product Product { get; set; }
 
     public void Update(string name)
     {

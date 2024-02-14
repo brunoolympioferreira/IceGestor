@@ -16,6 +16,6 @@ public class Product : BaseEntity
     public int IdFlavor { get; set; }
     public int IdCategory { get; set; }
 
-    public Flavor Flavor { get; set; }
-    public Category Category { get; set; }
+    public virtual Flavor Flavor { get; set; }
+    public virtual Category Category { get; set; }
 }

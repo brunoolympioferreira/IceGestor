@@ -1,5 +1,6 @@
 ﻿using IceGestor.Application.Models.InputModels.Product;
 using IceGestor.Application.Models.ViewModels;
+using IceGestor.Application.Services.Product;
 using IceGestor.Application.Services.Product.Category;
 using IceGestor.Application.Services.Product.Flavor.CreateFlavor;
 using IceGestor.Application.Services.Product.Flavor.DeleteFlavor;
@@ -103,6 +104,14 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> DeleteCategory([FromServices] ICategoryService categoryService, int id)
     {
         var result = await categoryService.Delete(id);
+
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateProduct([FromServices] IProductService service, [FromBody] ProductInputModel inputModel)
+    {
+        BaseResult result = await service.Create(inputModel);
 
         return Ok(result);
     }

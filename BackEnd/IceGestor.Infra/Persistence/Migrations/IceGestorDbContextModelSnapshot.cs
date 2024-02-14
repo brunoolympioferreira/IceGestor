@@ -22,6 +22,7 @@ namespace IceGestor.Infra.Persistence.Migrations
             modelBuilder.Entity("IceGestor.Core.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -37,6 +38,7 @@ namespace IceGestor.Infra.Persistence.Migrations
             modelBuilder.Entity("IceGestor.Core.Entities.Flavor", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -83,7 +85,8 @@ namespace IceGestor.Infra.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(4, 2)
+                        .HasColumnType("decimal(4,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -98,6 +101,12 @@ namespace IceGestor.Infra.Persistence.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdCategory")
+                        .IsUnique();
+
+                    b.HasIndex("IdFlavor")
+                        .IsUnique();
 
                     b.ToTable("Products");
                 });
@@ -128,33 +137,33 @@ namespace IceGestor.Infra.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("IceGestor.Core.Entities.Category", b =>
+            modelBuilder.Entity("IceGestor.Core.Entities.Product", b =>
                 {
-                    b.HasOne("IceGestor.Core.Entities.Product", "Product")
-                        .WithOne("Category")
-                        .HasForeignKey("IceGestor.Core.Entities.Category", "Id")
+                    b.HasOne("IceGestor.Core.Entities.Category", "Category")
+                        .WithOne("Product")
+                        .HasForeignKey("IceGestor.Core.Entities.Product", "IdCategory")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("IceGestor.Core.Entities.Flavor", "Flavor")
+                        .WithOne("Product")
+                        .HasForeignKey("IceGestor.Core.Entities.Product", "IdFlavor")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Flavor");
+                });
+
+            modelBuilder.Entity("IceGestor.Core.Entities.Category", b =>
+                {
                     b.Navigation("Product");
                 });
 
             modelBuilder.Entity("IceGestor.Core.Entities.Flavor", b =>
                 {
-                    b.HasOne("IceGestor.Core.Entities.Product", "Product")
-                        .WithOne("Flavor")
-                        .HasForeignKey("IceGestor.Core.Entities.Flavor", "Id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("IceGestor.Core.Entities.Product", b =>
-                {
-                    b.Navigation("Category");
-
-                    b.Navigation("Flavor");
                 });
 #pragma warning restore 612, 618
         }
