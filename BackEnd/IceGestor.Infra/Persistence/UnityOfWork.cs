@@ -11,17 +11,20 @@ public class UnityOfWork : IUnityOfWork
         IceGestorDbContext context,
         IUserRepository users,
         IFlavorRepository flavors,
-        ICategoryRepository categories)
+        ICategoryRepository categories,
+        IProductRepository products)
     {
         _context = context;
         Users = users;
         Flavors = flavors;
         Categories = categories;
+        Products = products;
     }
     public IUserRepository Users { get; }
 
     public IFlavorRepository Flavors { get; }
     public ICategoryRepository Categories { get; }
+    public IProductRepository Products { get; }
 
     public async Task BeginTransactionAsync()
     {
