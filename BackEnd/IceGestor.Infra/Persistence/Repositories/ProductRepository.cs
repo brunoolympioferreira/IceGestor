@@ -15,8 +15,12 @@ public class ProductRepository : IProductRepository
         await _context.Products.AddAsync(product);
     }
 
-    public Task<List<Product>> GetAll()
+    public Task<List<Product>> GetAllAsync()
     {
-        return _context.Products.AsNoTracking().ToListAsync();
+        return _context.Products
+            .AsNoTracking()
+            .Include(p => p.Flavor)
+            .Include(p => p.Category)
+            .ToListAsync();
     }
 }

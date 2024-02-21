@@ -4,5 +4,5 @@ namespace IceGestor.Core.RepositoriesInterfaces;
 public interface IProductRepository
 {
     Task AddAsync(Product product);
-    Task<List<Product>> GetAll();
+    Task<List<Product>> GetAllAsync();
 }
