@@ -115,4 +115,12 @@ public class ProductController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllProducts([FromServices] IProductService productService)
+    {
+        var result = await productService.GetAll();
+
+        return Ok(result);
+    }
 }

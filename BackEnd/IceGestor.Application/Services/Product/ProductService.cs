@@ -1,5 +1,6 @@
 ﻿using IceGestor.Application.Models.InputModels.Product;
 using IceGestor.Application.Models.ViewModels;
+using IceGestor.Application.Models.ViewModels.Product;
 using IceGestor.CrossCutting.Exceptions;
 using IceGestor.Infra.Persistence;
 
@@ -28,6 +29,15 @@ public class ProductService : IProductService
         await _unityOfWork.CompleteAsync();
 
         return new BaseResult<int>(product.Id);
+    }
+
+    public async Task<BaseResult<List<ProductViewModel>>> GetAll()
+    {
+        var products = await _unityOfWork.Products.GetAllAsync();
+
+        var viewModels = products.Select(p => new ProductViewModel(p)).ToList();
+
+        return new BaseResult<List<ProductViewModel>>(viewModels);
     }
 
     private static void ValidateModel(ProductInputModel model)
