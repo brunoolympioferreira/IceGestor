@@ -123,4 +123,12 @@ public class ProductController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProductById([FromServices] IProductService productService, int id)
+    {
+        var result = await productService.GetById(id);
+
+        return Ok(result);
+    }
 }

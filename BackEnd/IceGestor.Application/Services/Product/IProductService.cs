@@ -7,4 +7,5 @@ public interface IProductService
 {
     Task<BaseResult<int>> Create(ProductInputModel model);
     Task<BaseResult<List<ProductViewModel>>> GetAll();
+    Task<BaseResult<ProductViewModel>> GetById(int id);
 }
