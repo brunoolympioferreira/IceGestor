@@ -23,4 +23,13 @@ public class ProductRepository : IProductRepository
             .Include(p => p.Category)
             .ToListAsync();
     }
+
+    public Task<Product> GetByIdAsync(int id)
+    {
+        return _context.Products
+            .AsNoTracking()
+            .Include(p => p.Flavor)
+            .Include(p => p.Category)
+            .SingleOrDefaultAsync(p => p.Id == id);
+    }
 }

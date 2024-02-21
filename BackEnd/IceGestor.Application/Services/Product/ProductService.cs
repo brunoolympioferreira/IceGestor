@@ -40,6 +40,16 @@ public class ProductService : IProductService
         return new BaseResult<List<ProductViewModel>>(viewModels);
     }
 
+    public async Task<BaseResult<ProductViewModel>> GetById(int id)
+    {
+        var product = await _unityOfWork.Products.GetByIdAsync(id) ??
+            throw new ValidationErrorsException("O id especificado não existe!");
+
+        var viewModel = new ProductViewModel(product);
+
+        return new BaseResult<ProductViewModel>(viewModel);
+    }
+
     private static void ValidateModel(ProductInputModel model)
     {
         var validator = new ProductValidator();
