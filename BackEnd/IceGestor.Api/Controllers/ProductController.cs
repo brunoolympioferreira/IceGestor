@@ -131,4 +131,12 @@ public class ProductController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateProduct([FromServices] IProductService productService,int id, [FromBody] ProductInputModel model)
+    {
+        await productService.Update(id, model);
+
+        return NoContent();
+    }
 }
