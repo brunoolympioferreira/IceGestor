@@ -15,6 +15,11 @@ public class ProductRepository : IProductRepository
         await _context.Products.AddAsync(product);
     }
 
+    public void Update(Product product)
+    {
+        _context.Update(product);
+    }
+
     public Task<List<Product>> GetAllAsync()
     {
         return _context.Products

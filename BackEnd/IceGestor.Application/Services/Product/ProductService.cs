@@ -31,6 +31,26 @@ public class ProductService : IProductService
         return new BaseResult<int>(product.Id);
     }
 
+    public async Task<BaseResult> Update(int id, ProductInputModel model)
+    {
+        ValidateModel(model);
+
+        var validationResult = ValidateExistenceForeignKeys(model);
+
+        if (validationResult.Success == false)
+        {
+            return new BaseResult(false, validationResult.Message);
+        }
+
+        Core.Entities.Product product = await _unityOfWork.Products.GetByIdAsync(id);
+        product.Update(model.Amount);
+
+        _unityOfWork.Products.Update(product);
+        await _unityOfWork.CompleteAsync();
+
+        return new BaseResult();
+    }
+
     public async Task<BaseResult<List<ProductViewModel>>> GetAll()
     {
         var products = await _unityOfWork.Products.GetAllAsync();

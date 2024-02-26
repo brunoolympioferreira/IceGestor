@@ -18,4 +18,9 @@ public class Product : BaseEntity
 
     public virtual Flavor Flavor { get; set; }
     public virtual Category Category { get; set; }
+
+    public void Update(decimal amount)
+    {
+        Amount = amount;
+    }
 }
