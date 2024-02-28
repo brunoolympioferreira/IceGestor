@@ -51,6 +51,17 @@ public class ProductService : IProductService
         return new BaseResult();
     }
 
+    public async Task<BaseResult> Delete(int id)
+    {
+        _ = await _unityOfWork.Products.GetByIdAsync(id) ?? throw new ValidationErrorsException("Produto não existe na base de dados");
+
+        await _unityOfWork.Products.Delete(id);
+
+        await _unityOfWork.CompleteAsync();
+
+        return new BaseResult();
+    }
+
     public async Task<BaseResult<List<ProductViewModel>>> GetAll()
     {
         var products = await _unityOfWork.Products.GetAllAsync();
