@@ -139,4 +139,12 @@ public class ProductController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProduct([FromServices] IProductService productService, int id)
+    {
+        var result = await productService.Delete(id);
+
+        return Ok(result);
+    }
 }

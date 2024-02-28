@@ -20,6 +20,13 @@ public class ProductRepository : IProductRepository
         _context.Update(product);
     }
 
+    public async Task Delete(int id)
+    {
+        var product = await _context.Products.SingleOrDefaultAsync(u => u.Id == id);
+
+        _context.Remove(product);
+    }
+
     public Task<List<Product>> GetAllAsync()
     {
         return _context.Products
