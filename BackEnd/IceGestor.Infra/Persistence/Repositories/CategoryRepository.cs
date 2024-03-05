@@ -23,8 +23,7 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task Delete(int id)
     {
-        Category category = await _context.Categories.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id) ??
-            throw new ValidationErrorsException("O id especificado não existe");
+        Category category = await _context.Categories.SingleOrDefaultAsync(c => c.Id == id);
             
         _context.Categories.Remove(category);
     }

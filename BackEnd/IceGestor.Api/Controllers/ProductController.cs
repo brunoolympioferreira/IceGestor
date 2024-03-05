@@ -1,5 +1,6 @@
 ﻿using IceGestor.Application.Models.InputModels.Product;
 using IceGestor.Application.Models.ViewModels;
+using IceGestor.Application.Services.Product;
 using IceGestor.Application.Services.Product.Category;
 using IceGestor.Application.Services.Product.Flavor.CreateFlavor;
 using IceGestor.Application.Services.Product.Flavor.DeleteFlavor;
@@ -103,6 +104,46 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> DeleteCategory([FromServices] ICategoryService categoryService, int id)
     {
         var result = await categoryService.Delete(id);
+
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateProduct([FromServices] IProductService service, [FromBody] ProductInputModel inputModel)
+    {
+        BaseResult result = await service.Create(inputModel);
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllProducts([FromServices] IProductService productService)
+    {
+        var result = await productService.GetAll();
+
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProductById([FromServices] IProductService productService, int id)
+    {
+        var result = await productService.GetById(id);
+
+        return Ok(result);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateProduct([FromServices] IProductService productService,int id, [FromBody] ProductInputModel model)
+    {
+        await productService.Update(id, model);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProduct([FromServices] IProductService productService, int id)
+    {
+        var result = await productService.Delete(id);
 
         return Ok(result);
     }
