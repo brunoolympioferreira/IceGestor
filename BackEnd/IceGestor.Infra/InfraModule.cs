@@ -13,7 +13,8 @@ public static class InfraModule
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IFlavorRepository, FlavorRepository>()
             .AddScoped<ICategoryRepository, CategoryRepository>()
-            .AddScoped<IProductRepository, ProductRepository>();
+            .AddScoped<IProductRepository, ProductRepository>()
+            .AddScoped<IProductStockRepository, ProductStockRepository>();
 
         return services;
     }
