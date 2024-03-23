@@ -7,6 +7,7 @@ public interface IUnityOfWork
     IFlavorRepository Flavors { get; }
     ICategoryRepository Categories { get; }
     IProductRepository Products { get; }
+    IProductStockRepository ProductStocks { get; }
 
     Task<int> CompleteAsync();
     Task BeginTransactionAsync();
