@@ -12,19 +12,23 @@ public class UnityOfWork : IUnityOfWork
         IUserRepository users,
         IFlavorRepository flavors,
         ICategoryRepository categories,
-        IProductRepository products)
+        IProductRepository products,
+        IProductStockRepository stock)
     {
         _context = context;
         Users = users;
         Flavors = flavors;
         Categories = categories;
         Products = products;
+        ProductStocks = stock;
     }
     public IUserRepository Users { get; }
 
     public IFlavorRepository Flavors { get; }
     public ICategoryRepository Categories { get; }
     public IProductRepository Products { get; }
+    public IProductStockRepository ProductStocks { get; }
+
 
     public async Task BeginTransactionAsync()
     {
